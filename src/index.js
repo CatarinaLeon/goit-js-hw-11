@@ -1,5 +1,5 @@
 import './sass/main.scss';
-import axios from "axios";
+// import axios from "axios";
 // import SimpleLightbox from 'simplelightbox';
 import Notiflix from 'notiflix';
 
@@ -17,14 +17,24 @@ buttonLoad.addEventListener('click', buttonClick);
 let page = 1;
 buttonLoad.classList.add('is-hidden');
 
- function fetchImages (value) {
+// `${BASE_URL}?key=${KEY}&q=${value}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`
+
+async function fetchImages (value) {
+  const response = await fetch(
+    `${BASE_URL}/?key=${KEY}&q=${value}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`
+  );
+  page += 1;
+  return response.json();
+  
+};
 
 
-  return fetch(`${BASE_URL}/?key=${KEY}&q=${value}&image_type=photo&pretty=true`).then(res=> {
-    return res.json();
 
-}).then(res=>res)
-}
+// function fetchImages(value) {
+//   return fetch(`${BASE_URL}/?key=${KEY}&q=${value}&image_type=photo&pretty=true`).then(res=> {
+//     return res.json();
+// }).then(res=>res)
+// }
 
 async function onSearch (e) {
   e.preventDefault();
@@ -35,7 +45,7 @@ async function onSearch (e) {
     Notiflix.Notify.info('Please, write something');
     return;
   }
-  console.log(value);
+  // console.log(value);
   const { totalHits } = await fetchImages(value)
  
     if (!totalHits) {
@@ -48,7 +58,7 @@ async function onSearch (e) {
 
 
 function renderPhoto({ hits, totalHits }) {
-  console.log(hits);
+  // console.log(hits);
   const pageLimit = Math.ceil(totalHits / hits.length);
     const markup = hits.map(({
         webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
@@ -70,7 +80,7 @@ function renderPhoto({ hits, totalHits }) {
   </div>
 </div></a>`
     }).join('');
-  console.log(markup);
+  // console.log(markup);
   gallery.insertAdjacentHTML('beforeend', markup);
 
   buttonLoad.classList.remove('is-hidden');
@@ -83,7 +93,7 @@ function renderPhoto({ hits, totalHits }) {
   }
   
 }
-console.log(gallery);
+// console.log(gallery);
 function buttonClick(e) {
   const value = searchForm.elements.searchQuery.value;
   fetchImages(value).then(renderPhoto).catch(error => error);
@@ -92,3 +102,8 @@ function buttonClick(e) {
 function clearLightbox() {
   gallery.innerHTML = '';
 }
+
+  // const response = fetch(`${BASE_URL}/?key=${KEY}&q=${value}&image_type=photo&pretty=true`);
+  // const img = response.json();
+  // page += 1;
+  // return img;
