@@ -17,16 +17,19 @@ buttonLoad.addEventListener('click', buttonClick);
 let page = 1;
 buttonLoad.classList.add('is-hidden');
 
-async function fetchImages (value) {
-  const response = await axios.get(
-    `${BASE_URL}?key=${KEY}&q=${value}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`,
-  );
+ function fetchImages (value) {
+  // const response = await axios.get(
+  //   `${BASE_URL}?key=${KEY}&q=${value}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`,
+  // );
 
-  page += 1;
-  return response.data;
+  // page += 1;
+  // return response.data;
 
+  return fetch(`${BASE_URL}?key=${KEY}&q=${value}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`).then(res=> {
+    return res.json();
 
-};
+}).then(res=>res)
+}
 
 async function onSearch (e) {
   e.preventDefault();
@@ -48,6 +51,7 @@ async function onSearch (e) {
 
 
 function renderPhoto({ hits, totalHits }) {
+  console.log(hits);
   const pageLimit = Math.ceil(totalHits / hits.length);
     const markup = hits.map(({
         webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
@@ -68,8 +72,10 @@ function renderPhoto({ hits, totalHits }) {
     </p>
   </div>
 </div></a>`
-  }).join('');
+    }).join('');
+  console.log(markup);
   gallery.insertAdjacentHTML('beforeend', markup);
+
   buttonLoad.classList.remove('is-hidden');
   if (page === pageLimit) {
     setTimeout(() => {
@@ -80,7 +86,7 @@ function renderPhoto({ hits, totalHits }) {
   }
   
 }
-
+console.log(gallery);
 function buttonClick(e) {
   const value = searchForm.elements.searchQuery.value;
   fetchImages(value).then(renderPhoto).catch(error => error);
