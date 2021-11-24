@@ -1,6 +1,7 @@
 import './sass/main.scss';
 // import axios from "axios";
-// import SimpleLightbox from 'simplelightbox';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
 
 const searchForm = document.querySelector('.search-form');
@@ -17,8 +18,6 @@ buttonLoad.addEventListener('click', buttonClick);
 let page = 1;
 buttonLoad.classList.add('is-hidden');
 
-// `${BASE_URL}?key=${KEY}&q=${value}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`
-
 async function fetchImages (value) {
   const response = await fetch(
     `${BASE_URL}/?key=${KEY}&q=${value}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`
@@ -27,8 +26,6 @@ async function fetchImages (value) {
   return response.json();
   
 };
-
-
 
 // function fetchImages(value) {
 //   return fetch(`${BASE_URL}/?key=${KEY}&q=${value}&image_type=photo&pretty=true`).then(res=> {
@@ -45,17 +42,16 @@ async function onSearch (e) {
     Notiflix.Notify.info('Please, write something');
     return;
   }
+  
   // console.log(value);
   const { totalHits } = await fetchImages(value)
- 
     if (!totalHits) {
-      buttonLoad.classList.add('is-hidden');
+    buttonLoad.classList.add('is-hidden');
     return Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.')
   }
   page = 1
   fetchImages(value).then(renderPhoto).catch(error => error);
 }
-
 
 function renderPhoto({ hits, totalHits }) {
   // console.log(hits);
@@ -86,14 +82,19 @@ function renderPhoto({ hits, totalHits }) {
   buttonLoad.classList.remove('is-hidden');
   if (page === pageLimit) {
     setTimeout(() => {
-      // buttonLoad.classList.remove('is-hidden');
       Notiflix.Notify.failure(`We're sorry, but you've reached the end of search results.`);
       buttonLoad.classList.add('is-hidden');
     }, 0);
   }
-  
+  lightLiteBox = new SimpleLightbox('.gallery a', {
+        /* options */
+        captionsData: 'alt',
+        captionDelay: 250,
+  });
+  lightbox.refresh();
 }
 // console.log(gallery);
+
 function buttonClick(e) {
   const value = searchForm.elements.searchQuery.value;
   fetchImages(value).then(renderPhoto).catch(error => error);
@@ -102,8 +103,3 @@ function buttonClick(e) {
 function clearLightbox() {
   gallery.innerHTML = '';
 }
-
-  // const response = fetch(`${BASE_URL}/?key=${KEY}&q=${value}&image_type=photo&pretty=true`);
-  // const img = response.json();
-  // page += 1;
-  // return img;
