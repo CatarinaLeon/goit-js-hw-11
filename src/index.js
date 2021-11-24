@@ -21,8 +21,11 @@ async function fetchImages (value) {
   const response = await axios.get(
     `${BASE_URL}?key=${KEY}&q=${value}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`,
   );
+
   page += 1;
-  return await response.data;
+  return response.data;
+
+
 };
 
 async function onSearch (e) {
