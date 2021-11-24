@@ -1,5 +1,5 @@
 import './sass/main.scss';
-import axios from "axios";
+// import axios from "axios";
 // import SimpleLightbox from 'simplelightbox';
 import Notiflix from 'notiflix';
 
@@ -18,11 +18,11 @@ let page = 1;
 buttonLoad.classList.add('is-hidden');
 
 async function fetchImages (value) {
-  const response = await axios.get(
+  const response = await fetch(
     `${BASE_URL}?key=${KEY}&q=${value}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`,
   );
   page += 1;
-  return await response.data;
+  return await response.json();
 };
 
 async function onSearch (e) {
