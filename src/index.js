@@ -25,7 +25,7 @@ buttonLoad.classList.add('is-hidden');
   // page += 1;
   // return response.data;
 
-  return fetch(`${BASE_URL}?key=${KEY}&q=${value}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`).then(res=> {
+  return fetch(`https://pixabay.com/api/?key=24464531-810b90441dc32988cf7404dfc&q=yellow+flowers&image_type=photo&pretty=true`).then(res=> {
     return res.json();
 
 }).then(res=>res)
