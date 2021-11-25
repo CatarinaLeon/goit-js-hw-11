@@ -39,10 +39,13 @@ body {
   display: block;
   margin: 0 auto;
   padding: 10px 15px;
+  background-color: #3965c4;
   border: #3965c4;
+  font-size: 15px;
+  color: white;
   border-radius: 5px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
   cursor: pointer;
+  box-shadow: 5px 5px 3px 1px rgba(14, 53, 182, 0.3);
 }
 
 .seach {
@@ -72,6 +75,11 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  border-radius: 5px;
+  // box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+  //   0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+  box-shadow: 5px 5px 3px 1px rgba(14, 53, 182, 0.3);
 }
 
 .info {
@@ -88,13 +96,10 @@ body {
   height: 200px;
   object-fit: cover;
   border-radius: 5px;
-  // border: #3965c4;
 }
 
 .gallery__item {
   border-radius: 5px;
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
-    0px 2px 1px -1px rgba(0, 0, 0, 0.12);
 }
 b {
   text-align: center;

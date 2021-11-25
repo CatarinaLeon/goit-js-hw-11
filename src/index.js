@@ -45,6 +45,7 @@ async function onSearch (e) {
   
   // console.log(value);
   const { totalHits } = await fetchImages(value)
+  
     if (!totalHits) {
     buttonLoad.classList.add('is-hidden');
     return Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.')
